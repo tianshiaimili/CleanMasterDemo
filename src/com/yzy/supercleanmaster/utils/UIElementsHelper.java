@@ -48,7 +48,8 @@ public class UIElementsHelper {
 		final SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
-		Drawable drawable = new ColorDrawable(0xFF2c5aa9);
+//		Drawable drawable = new ColorDrawable(0xFF2c5aa9);
+		Drawable drawable = new ColorDrawable(0xFF009688);
 //		if (settings.getString(NOW_PLAYING_COLOR, GREEN).equals(BLUE)) {
 //			drawable = new ColorDrawable(0xFF0099CC);
 //

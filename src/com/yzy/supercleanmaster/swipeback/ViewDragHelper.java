@@ -16,6 +16,7 @@
 
 package com.yzy.supercleanmaster.swipeback;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.VelocityTrackerCompat;
@@ -27,7 +28,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
-
 import java.util.Arrays;
 
 /**
@@ -35,6 +35,7 @@ import java.util.Arrays;
  * number of useful operations and state tracking for allowing a user to drag
  * and reposition views within their parent ViewGroup.
  */
+@SuppressLint("NewApi")
 public class ViewDragHelper {
     private static final String TAG = "ViewDragHelper";
 

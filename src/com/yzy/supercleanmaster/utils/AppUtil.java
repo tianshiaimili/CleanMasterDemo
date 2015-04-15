@@ -15,6 +15,7 @@
  */
 package com.yzy.supercleanmaster.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
@@ -33,10 +34,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.view.inputmethod.InputMethodManager;
-
 import com.yzy.supercleanmaster.bean.AppProcessInfo;
 import com.yzy.supercleanmaster.bean.ProcessInfo;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -58,6 +57,7 @@ import java.util.regex.Pattern;
 /**
 
  */
+@SuppressLint("NewApi")
 public class AppUtil {
 
     public static List<String[]> mProcessList = null;
@@ -983,9 +983,10 @@ public class AppUtil {
             BufferedReader bufferedReader = new BufferedReader(fileReader, 8192);
             // 读取meminfo第一行，系统内存大小
             memInfo = bufferedReader.readLine();
+            LogUtils.e("memInfo---"+memInfo);
             strs = memInfo.split("\\s+");
             for (String str : strs) {
-                L.d(AppUtil.class, str + "\t");
+                LogUtils.d(AppUtil.class+"  "+str + "\t");
             }
             // 获得系统总内存，单位KB
             memory = Integer.valueOf(strs[1]).intValue() * 1024;

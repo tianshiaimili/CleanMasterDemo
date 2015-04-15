@@ -58,7 +58,6 @@ public class NavigationDrawerFragment extends BaseFragment {
 
     private void fillData() {
 
-
         for (int i = 0; i < radioIds.length; ++i) {
             radios[i] = (RadioButton) getView().findViewById(radioIds[i]);
             radios[i].setOnClickListener(clickItem);

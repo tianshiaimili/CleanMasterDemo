@@ -3,7 +3,8 @@
 
     <item name="green" type="color">#FF3BBD79</item>
     <item name="gray" type="color">#FF323A45</item>
-    <item name="gray_drawable" type="drawable">#FF2c5aa9</item>
+    <!-- <item name="gray_drawable" type="drawable">#FF2c5aa9</item> -->
+    <item name="gray_drawable" type="drawable">#FF009688</item>
     <item name="title_bg" type="color" >#FF2c5aa9</item>
     <item name="blue" type="color" >#1d83ce</item>
 

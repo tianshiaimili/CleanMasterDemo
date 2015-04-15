@@ -54,6 +54,7 @@ public class SplishActivity extends BaseActivity {
         setListener();
     }
 
+    /**安装快捷小图标*/
     private void createShortCut() {
         // TODO Auto-generated method stub
         Intent intent = new Intent();

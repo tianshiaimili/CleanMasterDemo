@@ -16,6 +16,7 @@ public class BaseFragment extends Fragment {
 		startActivity(cls, null);
 	}
 
+	
 	/** 含有Bundle通过Class跳转界面 **/
 	protected void startActivity(Class<?> cls, Bundle bundle) {
 		Intent intent = new Intent();

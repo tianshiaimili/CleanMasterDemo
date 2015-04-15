@@ -1,5 +1,7 @@
 package com.yzy.supercleanmaster.ui;
 
+import java.util.Date;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -9,11 +11,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import butterknife.InjectView;
+
 import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
 import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 import com.yzy.supercleanmaster.R;
@@ -23,11 +28,10 @@ import com.yzy.supercleanmaster.fragment.MainFragment;
 import com.yzy.supercleanmaster.fragment.NavigationDrawerFragment;
 import com.yzy.supercleanmaster.fragment.RelaxFragment;
 import com.yzy.supercleanmaster.fragment.SettingsFragment;
+import com.yzy.supercleanmaster.utils.LogUtils;
 import com.yzy.supercleanmaster.utils.SystemBarTintManager;
 import com.yzy.supercleanmaster.utils.T;
 import com.yzy.supercleanmaster.utils.UIElementsHelper;
-import java.util.Date;
-import butterknife.InjectView;
 
 
 @SuppressLint("NewApi")
@@ -62,6 +66,7 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
 
         mFragmentContainerView = (View) findViewById(R.id.navigation_drawer);
         mTitle = getTitle();
+        LogUtils.i("mTitle--"+mTitle);
        applyKitKatTranslucency();
 
         onNavigationDrawerItemSelected(0);
@@ -83,6 +88,7 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
                 return false;
             }
         };
+        //
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 drawerArrow, R.string.drawer_open, R.string.drawer_close) {
 
@@ -103,13 +109,24 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	LogUtils.i("--onCreateOptionsMenu");
+        return false;
+    }
 
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+    	
+    	LogUtils.i("--onMenuOpened");
+    	if(mDrawerLayout.isDrawerOpen(mFragmentContainerView)){
+		mDrawerLayout.closeDrawer(mFragmentContainerView);
+	}else {
+		mDrawerLayout.openDrawer(mFragmentContainerView);
+	}
+    	return super.onMenuOpened(featureId, menu);
+    }
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -149,6 +166,8 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
     private void applyKitKatTranslucency() {
 
         // KitKat translucent navigation/status bar.
+//    	LogUtils.i("Build.VERSION.SDK_INT---"+Build.VERSION.SDK_INT);
+//    	LogUtils.i("Build.VERSION_CODES.KITKAT---"+Build.VERSION_CODES.KITKAT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
             SystemBarTintManager mTintManager = new SystemBarTintManager(this);
@@ -158,11 +177,24 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
 
             mTintManager.setTintDrawable(UIElementsHelper
                     .getGeneralActionBarBackground(this));
-
+            //set the backgroundColor
             getActionBar().setBackgroundDrawable(
                     UIElementsHelper.getGeneralActionBarBackground(this));
 
-        }
+        }else {
+			
+            SystemBarTintManager mTintManager = new SystemBarTintManager(this);
+            mTintManager.setStatusBarTintEnabled(true);
+            mTintManager.setNavigationBarTintEnabled(true);
+            // mTintManager.setTintColor(0xF00099CC);
+
+            mTintManager.setTintDrawable(UIElementsHelper
+                    .getGeneralActionBarBackground(this));
+            //set the backgroundColor
+            getActionBar().setBackgroundDrawable(
+                    UIElementsHelper.getGeneralActionBarBackground(this));
+        	
+		}
 
     }
 
@@ -222,6 +254,7 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
 
     }
 
+    
     private void hideFragments(FragmentTransaction transaction) {
         if (mMainFragment != null) {
             transaction.hide(mMainFragment);

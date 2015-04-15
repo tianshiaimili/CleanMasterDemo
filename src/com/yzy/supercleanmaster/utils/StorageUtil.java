@@ -130,13 +130,19 @@ public class StorageUtil {
     }
 
     /**获取系统的存储大小*/
-    public static SDCardInfo getSystemSpaceInfo(Context context) {
+    @SuppressLint("NewApi")
+	public static SDCardInfo getSystemSpaceInfo(Context context) {
         File path = Environment.getDataDirectory();
         // File path = context.getCacheDir().getAbsoluteFile();
         StatFs stat = new StatFs(path.getPath());
         long blockSize = stat.getBlockSize();
+//        long blockSize = stat.getBlockSizeLong();
+        
+//        long totalBlocks = stat.getBlockCount();
         long totalBlocks = stat.getBlockCount();
+        
         long availableBlocks = stat.getAvailableBlocks();
+//        long availableBlocks = stat.getAvailableBlocksLong();
 
         long totalSize = blockSize * totalBlocks;
         long availSize = availableBlocks * blockSize;

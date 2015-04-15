@@ -38,8 +38,6 @@
     <declare-styleable name="Themes">
         <attr name="waveViewStyle" format="reference" />
     </declare-styleable>
-
-
     <declare-styleable name="RoundCornerProgress">
         <attr name="progress1" format="integer" />
         <attr name="backgroundPadding" format="dimension" />
@@ -59,8 +57,6 @@
         <attr name="textProgressPadding" format="dimension" />
         <attr name="autoTextChange" format="boolean" />
     </declare-styleable>
-
-
     <declare-styleable name="SlidingTab">
         <attr name="pstsIndicatorColorWe" format="color" />
         <attr name="pstsUnderlineColorWe" format="color" />
@@ -90,7 +86,6 @@
         </attr>
         <attr name="android:text" />
     </declare-styleable>
-
     <declare-styleable name="RippleView">
         <attr name="rv_alpha" format="integer" />
         <attr name="rv_framerate" format="integer" />
@@ -107,7 +102,6 @@
         <attr name="rv_zoom" format="boolean" />
         <attr name="rv_zoomScale" format="float" />
     </declare-styleable>
-
     <declare-styleable name="SwipeBackLayout">
         <attr name="edge_size" format="dimension" />
         <attr name="edge_flag">
@@ -120,12 +114,19 @@
         <attr name="shadow_right" format="reference" />
         <attr name="shadow_bottom" format="reference" />
     </declare-styleable>
+
     <attr name="SwipeBackLayoutStyle" format="reference" />
+
     <declare-styleable name="ItemCardView">
         <attr name="card_name" format="string" />
         <attr name="card_image" format="reference" />
-
     </declare-styleable>
-
+    
+    <declare-styleable name="HomeButton">
+        <attr name="backcolor" format="integer" />
+        <attr name="textSize" format="dimension" />
+        <attr name="text" format="string" />
+        <attr name="image" format="reference"></attr>
+    </declare-styleable>
 
 </resources>

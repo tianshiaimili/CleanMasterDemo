@@ -30,7 +30,10 @@
                     custom:arc_progress="10"
                     custom:arc_stroke_width="8dip"
                     custom:arc_text_color="#ffffff"
-                    custom:arc_text_size="32dip" />
+                    custom:arc_text_size="32dip" 
+                    custom:arc_finished_color="#FFFFFF"
+                    custom:arc_unfinished_color="#486AB0"
+                    />
 
                 <TextView
                     android:id="@+id/capacity"

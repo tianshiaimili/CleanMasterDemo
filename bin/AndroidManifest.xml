@@ -66,34 +66,46 @@
             android:screenOrientation="portrait"
             android:name=".ui.MemoryCleanActivity"
             android:label="@string/app_memory_clean"
-            android:theme="@style/MyTranslucentAppTheme"></activity>
+            android:theme="@style/MyTranslucentAppTheme"
+            android:launchMode="singleTask" 
+            ></activity>
 
         <activity
             android:screenOrientation="portrait"
             android:name=".ui.RubbishCleanActivity"
             android:label="@string/app_rublish_clean"
-            android:theme="@style/MyTranslucentAppTheme"></activity>
+            android:theme="@style/MyTranslucentAppTheme"
+            android:launchMode="singleTask" 
+            ></activity>
 
         <activity
             android:screenOrientation="portrait"
             android:name=".ui.AutoStartManageActivity"
             android:label="@string/app_autostart_manage"
-            android:theme="@style/MyTranslucentAppTheme"></activity>
+            android:theme="@style/MyTranslucentAppTheme"
+            android:launchMode="singleTask" 
+            ></activity>
 
         <activity
             android:screenOrientation="portrait"
             android:name=".ui.SoftwareManageActivity"
             android:label="@string/app_software_manage"
-            android:theme="@style/MyTranslucentAppTheme"></activity>
+            android:theme="@style/MyTranslucentAppTheme"
+            android:launchMode="singleTask" 
+            ></activity>
 
         <activity
             android:screenOrientation="portrait"
             android:name=".base.FragmentContainerActivity"
-            android:theme="@style/MyTranslucentAppTheme"></activity>
+            android:theme="@style/MyTranslucentAppTheme"
+            android:launchMode="singleTask" 
+            ></activity>
         <activity
             android:screenOrientation="portrait"
             android:name=".ui.AboutActivity"
-            android:theme="@style/MyTranslucentAppTheme"></activity>
+            android:theme="@style/MyTranslucentAppTheme"
+            android:launchMode="singleTask" 
+            ></activity>
 
         <service
             android:name=".service.CleanerService"

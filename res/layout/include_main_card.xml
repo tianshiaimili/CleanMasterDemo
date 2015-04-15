@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card="http://schemas.android.com/apk/res-auto"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/card_normal"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0.0dip"
         android:layout_weight="1.0"
-        android:orientation="horizontal">
+        android:background="#cccccc"
+        android:orientation="horizontal" >
 
         <RelativeLayout
             android:id="@+id/card1"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
-            android:layout_weight="1.0">
+            android:layout_weight="1.0" >
 
-            <com.yzy.supercleanmaster.views.ItemCardView
-                android:layout_centerInParent="true"
+            <!--
+                 <com.yzy.supercleanmaster.views.ItemCardView
+                android:id="@+id/memory_speed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                card:card_name="内存加速"
-                card:card_image="@drawable/card_icon_speedup" />
+                android:layout_centerInParent="true"
+                card:card_image="@drawable/card_icon_speedup"
+                card:card_name="内存加速" />
+            -->
 
-
+            <com.yzy.supercleanmaster.views.HomeButton
+                android:id="@+id/memory_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                ptr:image="@drawable/card_icon_speedup"
+                ptr:text="@string/app_memory_clean"
+                ptr:textSize="14sp" />
         </RelativeLayout>
 
         <View
@@ -37,15 +49,26 @@
             android:id="@+id/card2"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
-            android:layout_weight="1.0">
+            android:layout_weight="1.0" >
 
-
+            <!--
             <com.yzy.supercleanmaster.views.ItemCardView
-                android:layout_centerInParent="true"
+                android:id="@+id/waste_manager"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                card:card_name="垃圾清理"
-                card:card_image="@drawable/card_icon_trash" />
+                android:layout_centerInParent="true"
+                card:card_image="@drawable/card_icon_trash"
+                card:card_name="垃圾清理" />
+            -->
+
+            <com.yzy.supercleanmaster.views.HomeButton
+                android:id="@+id/waste_manager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                ptr:image="@drawable/card_icon_trash"
+                ptr:text="@string/app_rublish_clean"
+                ptr:textSize="14sp" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -58,22 +81,33 @@
         android:layout_width="fill_parent"
         android:layout_height="0.0dip"
         android:layout_weight="1.0"
-        android:orientation="horizontal">
+        android:background="#cccccc"
+        android:orientation="horizontal" >
 
         <RelativeLayout
             android:id="@+id/card3"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
-            android:layout_weight="1.0">
+            android:layout_weight="1.0" >
 
-
-            <com.yzy.supercleanmaster.views.ItemCardView
+            <!--
+                      <com.yzy.supercleanmaster.views.ItemCardView
+                android:id="@+id/start_manager"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 card:card_name="自启管理"
                 card:card_image="@drawable/card_icon_autorun" />
+            -->
 
+            <com.yzy.supercleanmaster.views.HomeButton
+                android:id="@+id/start_manager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                ptr:image="@drawable/card_icon_autorun"
+                ptr:text="@string/app_autostart_manage"
+                ptr:textSize="14sp" />
         </RelativeLayout>
 
         <View
@@ -85,17 +119,26 @@
             android:id="@+id/card4"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
-            android:layout_weight="1.0">
+            android:layout_weight="1.0" >
 
-
-            <com.yzy.supercleanmaster.views.ItemCardView
-                android:layout_centerInParent="true"
+            <!--
+                 <com.yzy.supercleanmaster.views.ItemCardView
+                android:id="@+id/software_manager"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                card:card_name="@string/app_software_manage"
-                card:card_image="@drawable/card_icon_media" />
+                android:layout_centerInParent="true"
+                card:card_image="@drawable/card_icon_media"
+                card:card_name="@string/app_software_manage" />
+            -->
 
-
+            <com.yzy.supercleanmaster.views.HomeButton
+                android:id="@+id/software_manager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                ptr:image="@drawable/card_icon_media"
+                ptr:text="@string/app_software_manage"
+                ptr:textSize="14sp" />
         </RelativeLayout>
     </LinearLayout>
 
