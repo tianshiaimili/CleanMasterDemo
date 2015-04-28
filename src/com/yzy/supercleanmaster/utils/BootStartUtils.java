@@ -82,6 +82,11 @@ public class BootStartUtils {
     }
 
 
+    /**
+     * get the auto start software
+     * @param mContext
+     * @return
+     */
     public static List<AutoStartInfo> fetchAutoApps(Context mContext) {
         PackageManager pm = mContext.getPackageManager();
         Intent intent = new Intent(Intent.ACTION_BOOT_COMPLETED);
@@ -95,12 +100,13 @@ public class BootStartUtils {
         if (resolveInfoList.size() > 0) {
 
             appName = resolveInfoList.get(0).loadLabel(pm).toString();
+            LogUtils.d("appName = "+appName);
             packageReceiver = resolveInfoList.get(0).activityInfo.packageName + "/" + resolveInfoList.get(0).activityInfo.name;
+            LogUtils.d("packageReceiver = "+packageReceiver);
             icon = resolveInfoList.get(0).loadIcon(pm);
             ComponentName mComponentName1 = new ComponentName(resolveInfoList.get(0).activityInfo.packageName, resolveInfoList.get(0).activityInfo.name);
 
             if (pm.getComponentEnabledSetting(mComponentName1) == 2) {
-
                 isenable = false;
             } else {
                 isenable = true;
@@ -115,6 +121,7 @@ public class BootStartUtils {
                 if (appName.equals(resolveInfoList.get(i).loadLabel(pm).toString())) {
                     packageReceiver = packageReceiver + ";" + resolveInfoList.get(i).activityInfo.packageName + "/" + resolveInfoList.get(i).activityInfo.name;
                 } else {
+                	LogUtils.d("for -- appName = "+appName);
                     mAutoStartInfo.setLabel(appName);
                     mAutoStartInfo.setSystem(isSystem);
                     mAutoStartInfo.setEnable(isenable);
@@ -127,8 +134,7 @@ public class BootStartUtils {
                     icon = resolveInfoList.get(i).loadIcon(pm);
                     ComponentName mComponentName2 = new ComponentName(resolveInfoList.get(i).activityInfo.packageName, resolveInfoList.get(i).activityInfo.name);
                     if (pm.getComponentEnabledSetting(mComponentName2) == 2) {
-
-                        isenable = false;
+                    	isenable = false;
                     } else {
                         isenable = true;
                     }

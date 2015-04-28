@@ -2,6 +2,7 @@ package com.yzy.supercleanmaster.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -26,17 +27,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.InjectView;
 import butterknife.OnClick;
+
 import com.etiennelawlor.quickreturn.library.enums.QuickReturnType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnListViewOnScrollListener;
-import com.john.waveview.WaveView;
+import com.hua.itemview.WaveView;
 import com.nhaarman.listviewanimations.itemmanipulation.OnDismissCallback;
+import com.nhaarman.listviewanimations.swinginadapters.AnimationAdapter;
 import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
+import com.nineoldandroids.animation.Animator;
 import com.yzy.supercleanmaster.R;
 import com.yzy.supercleanmaster.adapter.ClearMemoryAdapter;
 import com.yzy.supercleanmaster.base.BaseSwipeBackActivity;
 import com.yzy.supercleanmaster.bean.AppProcessInfo;
 import com.yzy.supercleanmaster.model.StorageSize;
 import com.yzy.supercleanmaster.service.CoreService;
+import com.yzy.supercleanmaster.utils.LogUtils;
 import com.yzy.supercleanmaster.utils.StorageUtil;
 import com.yzy.supercleanmaster.utils.SystemBarTintManager;
 import com.yzy.supercleanmaster.utils.T;
@@ -62,30 +67,36 @@ public class MemoryCleanActivity extends BaseSwipeBackActivity implements OnDism
     List<AppProcessInfo> mAppProcessInfos = new ArrayList<>();
     ClearMemoryAdapter mClearMemoryAdapter;
 
+    /**<!-- 显示可清除的内存数量 -->*/
     @InjectView(R.id.textCounter)
     CounterView textCounter;
     @InjectView(R.id.sufix)
     TextView sufix;
     public long Allmemory;
 
+    /*底部的一键清理布局*/
     @InjectView(R.id.bottom_lin)
     LinearLayout bottom_lin;
 
+    /*加载进度圈*/
     @InjectView(R.id.progressBar)
     View mProgressBar;
+    /*进度圈 显示扫描的个数*/
     @InjectView(R.id.progressBarText)
     TextView mProgressBarText;
 
+    /*底部的一键清理按钮*/
     @InjectView(R.id.clear_button)
     Button clearButton;
     private static final int INITIAL_DELAY_MILLIS = 300;
     SwingBottomInAnimationAdapter swingBottomInAnimationAdapter;
-
+    /**在后台检测 可清理内存的app*/
     private CoreService mCoreService;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+        	LogUtils.i("onServiceConnected--------");
             mCoreService = ((CoreService.ProcessServiceBinder) service).getService();
             mCoreService.setOnActionListener(MemoryCleanActivity.this);
             mCoreService.scanRunProcess();
@@ -113,11 +124,13 @@ public class MemoryCleanActivity extends BaseSwipeBackActivity implements OnDism
                 mServiceConnection, Context.BIND_AUTO_CREATE);
         int footerHeight = mContext.getResources().getDimensionPixelSize(R.dimen.footer_height);
         mListView.setOnScrollListener(new QuickReturnListViewOnScrollListener(QuickReturnType.FOOTER, null, 0, bottom_lin, footerHeight));
+        //设置显示可清理的内存
         textCounter.setAutoFormat(false);
         textCounter.setFormatter(new DecimalFormatter());
         textCounter.setAutoStart(false);
         textCounter.setIncrement(5f); // the amount the number increments at each time interval
         textCounter.setTimeInterval(50); // the time interval (ms) at which the text changes
+        LogUtils.i("onCreate--------");
     }
 
     @Override
@@ -172,6 +185,7 @@ public class MemoryCleanActivity extends BaseSwipeBackActivity implements OnDism
 
     @Override
     public void onScanStarted(Context context) {
+    	LogUtils.i("onScanStarted---------");
         mProgressBarText.setText(R.string.scanning);
         showProgressBar(true);
     }
@@ -183,6 +197,7 @@ public class MemoryCleanActivity extends BaseSwipeBackActivity implements OnDism
 
     @Override
     public void onScanCompleted(Context context, List<AppProcessInfo> apps) {
+    	LogUtils.i("onScanCompleted---------");
         mAppProcessInfos.clear();
 
         Allmemory = 0;
@@ -203,18 +218,17 @@ public class MemoryCleanActivity extends BaseSwipeBackActivity implements OnDism
         if (apps.size() > 0) {
             header.setVisibility(View.VISIBLE);
             bottom_lin.setVisibility(View.VISIBLE);
-
-
         } else {
             header.setVisibility(View.GONE);
             bottom_lin.setVisibility(View.GONE);
         }
+        
 //        mClearMemoryAdapter = new ClearMemoryAdapter(mContext,
 //                apps);  mClearMemoryAdapter = new ClearMemoryAdapter(mContext,
 //                apps);
 //        swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(mClearMemoryAdapter, MemoryCleanActivity.this));
 //        swingBottomInAnimationAdapter.setAbsListView(mListView);
-//        assert swingBottomInAnimationAdapter.getViewAnimator() != null;
+////        swingBottomInAnimationAdapter.getViewAnimator() != null;
 //        swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
 //
 //        mListView.setAdapter(swingBottomInAnimationAdapter);
@@ -224,7 +238,8 @@ public class MemoryCleanActivity extends BaseSwipeBackActivity implements OnDism
     }
 
     private void refeshTextCounter() {
-        mwaveView.setProgress(20);
+    	LogUtils.d("refeshTextCounter-------");
+//        mwaveView.setProgress(20);
         StorageSize mStorageSize = StorageUtil.convertStorageSize(Allmemory);
         textCounter.setStartValue(0f);
         textCounter.setEndValue(mStorageSize.value);
@@ -259,7 +274,7 @@ public class MemoryCleanActivity extends BaseSwipeBackActivity implements OnDism
         }
         Allmemory = Allmemory - killAppmemory;
         T.showLong(mContext, "共清理" + StorageUtil.convertStorage(killAppmemory) + "内存");
-        if (Allmemory > 0) {
+        if (Allmemory >= 0) {
             refeshTextCounter();
         }
 
@@ -285,7 +300,6 @@ public class MemoryCleanActivity extends BaseSwipeBackActivity implements OnDism
 
 	@Override
 	public void onDismiss(AbsListView arg0, int[] arg1) {
-		// TODO Auto-generated method stub
 		
 	}
 }

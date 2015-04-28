@@ -1,33 +1,23 @@
 package com.yzy.supercleanmaster.ui;
 
-import java.util.Random;
-
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.yzy.supercleanmaster.R;
 import com.yzy.supercleanmaster.base.BaseActivity;
 import com.yzy.supercleanmaster.service.CleanerService;
 import com.yzy.supercleanmaster.service.CoreService;
-import com.yzy.supercleanmaster.utils.LogUtils;
 import com.yzy.supercleanmaster.utils.SharedPreferencesUtils;
 
+import java.util.Random;
 
-@SuppressLint("NewApi")
-public class SplishActivity extends BaseActivity {
+
+public class CopyOfSplishActivity extends BaseActivity {
 
     /**
      * 三个切换的动画
@@ -35,11 +25,6 @@ public class SplishActivity extends BaseActivity {
     private Animation mFadeIn;
     private Animation mFadeInScale;
     private Animation mFadeOut;
-    
-    ////
-    @SuppressLint("NewApi")
-	AnimatorSet animSet = new AnimatorSet();
-    
 
     //  @InjectView(R.id.image)
     ImageView mImageView;
@@ -65,9 +50,8 @@ public class SplishActivity extends BaseActivity {
             createShortCut();
         }
 
-        playWithAfter(mImageView);
-//        initAnim();
-//        setListener();
+        initAnim();
+        setListener();
     }
 
     /**安装快捷小图标*/
@@ -97,66 +81,6 @@ public class SplishActivity extends BaseActivity {
         mImageView.startAnimation(mFadeIn);
     }
 
-    
-    
-	public void playWithAfter(View view)
-	{
-		float cx = mImageView.getX();
-		LogUtils.i("cx--"+cx);
-
-		ObjectAnimator alphAnimator = ObjectAnimator.ofFloat(mImageView, "alpha", 0.5f,1f);
-		alphAnimator.setDuration(2000);
-		ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(mImageView, "scaleX",
-				1.0f, 1.1f);
-		scaleXAnimator.setDuration(2000);
-		//
-		ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(mImageView, "scaleY",
-				1.0f, 1.1f);
-		scaleYAnimator.setDuration(2000);
-		
-		PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("alpha", 1f,
-				1f, 0f);
-		PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleX", 1.2f,
-				 1f);
-		PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 1.2f,
-				 1f);
-		ObjectAnimator scaleOutAnimator = ObjectAnimator.ofPropertyValuesHolder(mImageView, pvhX, pvhY, pvhZ);
-		
-		/**
-		 * anim1，anim2,anim3同时执行
-		 * anim4接着执行
-		 */
-		AnimatorSet animSet = new AnimatorSet();
-		animSet.play(scaleXAnimator).with(scaleYAnimator).with(alphAnimator);
-//		animSet.play(scaleOutAnimator).after(alphAnimator);
-//		animSet.setDuration(1000);
-		animSet.start();
-		animSet.setInterpolator(new DecelerateInterpolator());
-		animSet.addListener(new AnimatorListener() {
-			
-			@Override
-			public void onAnimationStart(Animator animation) {
-				
-			}
-			
-			@Override
-			public void onAnimationRepeat(Animator animation) {
-				
-			}
-			
-			@Override
-			public void onAnimationEnd(Animator animation) {
-                startActivity(MainActivity.class);
-                finish();
-			}
-			
-			@Override
-			public void onAnimationCancel(Animator animation) {
-				
-			}
-		});
-	}
-    
 
     /**
      * 监听事件

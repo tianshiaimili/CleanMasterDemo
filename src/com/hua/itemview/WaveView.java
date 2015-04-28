@@ -1,4 +1,4 @@
-package com.john.waveview;
+package com.hua.itemview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,7 +13,8 @@ import com.yzy.supercleanmaster.R;
 
 
 /**
- * Created by John on 2014/10/15.
+ * 
+ * 
  */
 public class WaveView extends LinearLayout {
     protected static final int LARGE = 1;

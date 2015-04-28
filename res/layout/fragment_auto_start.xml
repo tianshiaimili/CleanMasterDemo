@@ -2,61 +2,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f6f6f6">
+        android:background="#f6f6f6" >
 
         <TextView
             android:id="@+id/topText"
-            android:textColor="#787878"
-            android:text="非系统应用建议禁止"
-            android:layout_marginTop="@dimen/margin_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_right"
             android:layout_marginLeft="@dimen/margin_left"
             android:layout_marginRight="@dimen/margin_right"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_marginTop="@dimen/margin_right"
+            android:text="非系统应用建议禁止"
+            android:textColor="#787878" />
 
         <ListView
-            android:layout_above="@+id/bottom_lin"
-            android:layout_below="@+id/topText"
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fastScrollEnabled="true"
-            android:focusable="true"
-            android:listSelector="@android:color/transparent"
-            android:scrollbars="none"
+            android:layout_above="@+id/bottom_lin"
+            android:layout_below="@+id/topText"
             android:clipToPadding="false"
             android:divider="@null"
             android:dividerHeight="4dp"
-            android:padding="12dp" />
-
+            android:fastScrollEnabled="true"
+            android:focusable="true"
+            android:listSelector="@android:color/transparent"
+            android:padding="12dp"
+            android:scrollbars="vertical" />
 
         <LinearLayout
-            android:visibility="gone"
-            android:orientation="horizontal"
             android:id="@+id/bottom_lin"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:visibility="gone" 
+            >
 
             <Button
                 android:id="@+id/disable_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="8dip"
                 android:background="@drawable/btn_normal_green"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_large"
-                android:layout_width="match_parent"
                 android:gravity="center"
                 android:text="一键清理"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_large" />
         </LinearLayout>
-
     </RelativeLayout>
 
     <LinearLayout
@@ -66,7 +64,7 @@
         android:background="?android:attr/windowBackground"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone" >
 
         <fr.castorflex.android.circularprogressbar.CircularProgressBar
             android:id="@+id/progressBar2"
@@ -83,6 +81,6 @@
             android:singleLine="true"
             android:text="@string/scanning"
             android:textAppearance="?android:attr/textAppearanceSmall" />
-
     </LinearLayout>
+
 </FrameLayout>

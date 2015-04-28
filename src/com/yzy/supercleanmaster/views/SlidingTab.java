@@ -16,6 +16,7 @@
 
 package com.yzy.supercleanmaster.views;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -37,14 +38,10 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.yzy.supercleanmaster.R;
-
 import java.util.Locale;
 
-
-
-
+@SuppressLint("NewApi")
 public class SlidingTab extends HorizontalScrollView {
 
     public interface IconTabProvider {
@@ -93,6 +90,7 @@ public class SlidingTab extends HorizontalScrollView {
     private int tabTextSize = 12;
     private int tabTextColor = 0xFF666666;
     private int selectedTabTextColor = 0xFF666666;
+    private int selectedTabBackground = 0xFF2c5aa9;
     private Typeface tabTypeface = null;
     private int tabTypefaceStyle = Typeface.NORMAL;
 
@@ -277,6 +275,7 @@ public class SlidingTab extends HorizontalScrollView {
                 }
                 if (i == selectedPosition) {
                     tab.setTextColor(selectedTabTextColor);
+//                    v.setBackgroundColor(selectedTabBackground);
                 }
             }
         }
@@ -504,6 +503,11 @@ public class SlidingTab extends HorizontalScrollView {
 
     public void setSelectedTextColor(int textColor) {
         this.selectedTabTextColor = textColor;
+        updateTabStyles();
+    }
+    
+    public void setSelectedTabBackground(int textColor) {
+        this.selectedTabBackground = textColor;
         updateTabStyles();
     }
 

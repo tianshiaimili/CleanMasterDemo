@@ -8,7 +8,7 @@
     android:background="@android:color/holo_blue_dark"
     android:orientation="vertical" >
 
-    <com.john.waveview.WaveView
+    <com.hua.itemview.WaveView
         android:id="@+id/wave_view"
         android:layout_width="100dip"
         android:layout_height="match_parent"

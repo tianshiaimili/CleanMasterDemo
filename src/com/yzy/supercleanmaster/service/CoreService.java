@@ -1,5 +1,6 @@
 package com.yzy.supercleanmaster.service;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Context;
@@ -17,11 +18,13 @@ import android.widget.Toast;
 
 import com.yzy.supercleanmaster.R;
 import com.yzy.supercleanmaster.bean.AppProcessInfo;
+import com.yzy.supercleanmaster.utils.LogUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressLint("NewApi")
 public class CoreService extends Service {
 
     public static final String ACTION_CLEAN_AND_EXIT = "com.yzy.service.cleaner.CLEAN_AND_EXIT";
@@ -51,6 +54,7 @@ public class CoreService extends Service {
         public void onCleanCompleted(Context context, long cacheSize);
     }
 
+    /***/
     public class ProcessServiceBinder extends Binder {
 
         public CoreService getService() {
@@ -63,6 +67,7 @@ public class CoreService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+    	LogUtils.i("onBind----");
         return mBinder;
     }
 
@@ -76,7 +81,9 @@ public class CoreService extends Service {
             packageManager = getApplicationContext()
                     .getPackageManager();
         } catch (Exception e) {
-
+        	
+        	LogUtils.e("error---");
+        	
         }
 
 
@@ -85,7 +92,8 @@ public class CoreService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
-
+        LogUtils.i("action = "+action);
+        
         if (action != null) {
             if (action.equals(ACTION_CLEAN_AND_EXIT)) {
                 setOnActionListener(new OnPeocessActionListener() {
@@ -113,6 +121,7 @@ public class CoreService extends Service {
 
                     @Override
                     public void onCleanCompleted(Context context, long cacheSize) {
+                    	LogUtils.i("onCleanCompleted--------");
                         String msg = getString(R.string.cleaned, Formatter.formatShortFileSize(
                                 CoreService.this, cacheSize));
 
@@ -128,7 +137,9 @@ public class CoreService extends Service {
                         }, 5000);
                     }
                 });
-
+                
+                //
+                LogUtils.i("action = "+action);
                 scanRunProcess();
             }
         }
@@ -136,6 +147,12 @@ public class CoreService extends Service {
         return START_NOT_STICKY;
     }
 
+    @Override
+    public void onDestroy() {
+    	LogUtils.e("onDestroy------");
+    	super.onDestroy();
+    }
+    
 
     private class TaskScan extends AsyncTask<Void, Integer, List<AppProcessInfo>> {
 
@@ -153,16 +170,22 @@ public class CoreService extends Service {
             list = new ArrayList<AppProcessInfo>();
             ApplicationInfo appInfo = null;
             AppProcessInfo abAppProcessInfo = null;
-
+            String currentProcessName = getApplicationInfo().processName;
             List<ActivityManager.RunningAppProcessInfo> appProcessList = activityManager
                     .getRunningAppProcesses();
+            
+            //这里是更新显示扫描多少个可扫描的app的个数 
             publishProgress(0, appProcessList.size());
 
             for (ActivityManager.RunningAppProcessInfo appProcessInfo : appProcessList) {
+            	//不停的更新   显示已经扫描了多少个 ，将在 onProgressUpdate中使用
                 publishProgress(++mAppCount, appProcessList.size());
                 abAppProcessInfo = new AppProcessInfo(
                         appProcessInfo.processName, appProcessInfo.pid,
                         appProcessInfo.uid);
+                //除去自己 
+                if(currentProcessName.equals(appProcessInfo.processName)) continue;
+                
                 try {
                     appInfo = packageManager.getApplicationInfo(appProcessInfo.processName, 0);
 
@@ -181,7 +204,7 @@ public class CoreService extends Service {
                     //   e.printStackTrace();
 
                     // :服务的命名
-
+                	//一些被卸载了的app 的缓存
                     if (appProcessInfo.processName.indexOf(":") != -1) {
                         appInfo = getApplicationInfo(appProcessInfo.processName.split(":")[0]);
                         if (appInfo != null) {
@@ -198,7 +221,9 @@ public class CoreService extends Service {
                     abAppProcessInfo.appName = appProcessInfo.processName;
                 }
 
-
+                /**
+                 * 获取当前的活动着的app的暂用内存
+                 */
                 long memsize = activityManager.getProcessMemoryInfo(new int[]{appProcessInfo.pid})[0].getTotalPrivateDirty() * 1024;
                 abAppProcessInfo.memory = memsize;
 
@@ -228,14 +253,13 @@ public class CoreService extends Service {
 
     public void scanRunProcess() {
         // mIsScanning = true;
-
         new TaskScan().execute();
     }
 
 
     public void killBackgroundProcesses(String processName) {
         // mIsScanning = true;
-
+    	LogUtils.d("processName---=="+processName);
         String packageName = null;
         try {
             if (processName.indexOf(":") == -1) {
@@ -253,6 +277,10 @@ public class CoreService extends Service {
             forceStopPackage.invoke(activityManager, packageName);
         } catch (Exception e) {
             e.printStackTrace();
+        }finally{
+        	LogUtils.d("stopSelf==");
+        	stopSelf();
+        	
         }
 
     }
@@ -286,13 +314,9 @@ public class CoreService extends Service {
 
         @Override
         protected void onPostExecute(Long result) {
-
-
             if (mOnActionListener != null) {
                 mOnActionListener.onCleanCompleted(CoreService.this, result);
             }
-
-
         }
     }
 
@@ -308,7 +332,6 @@ public class CoreService extends Service {
 
     public void cleanAllProcess() {
         //  mIsCleaning = true;
-
         new TaskClean().execute();
     }
 

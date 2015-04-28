@@ -1,4 +1,4 @@
-package com.john.waveview;
+package com.hua.itemview;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -5,7 +5,7 @@
     <item name="gray" type="color">#FF323A45</item>
     <!-- <item name="gray_drawable" type="drawable">#FF2c5aa9</item> -->
     <item name="gray_drawable" type="drawable">#FF009688</item>
-    <item name="title_bg" type="color" >#FF2c5aa9</item>
+    <item name="title_bg" type="color" >#FF009688</item>
     <item name="blue" type="color" >#1d83ce</item>
 
     <drawable name="transparent">#00000000</drawable>
@@ -30,7 +30,8 @@
     <color name="blue_200">#90CAF9</color>
 
     <color name="background_tab_pressed">#ffffff</color>
-    <color name="green_6a">#FF2c5aa9</color>
+    <color name="green_6a">#FF009688</color>
+    <color name="green_pressed">#FF2c5aa9</color>
 
     <color name="gplus_color_1">#3e802f</color>
     <color name="gplus_color_2">#f4b400</color>

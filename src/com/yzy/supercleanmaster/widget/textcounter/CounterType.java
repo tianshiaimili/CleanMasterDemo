@@ -1,7 +1,6 @@
 package com.yzy.supercleanmaster.widget.textcounter;
 
 /**
- * Created by prem on 10/28/14.
  *
  *
  */

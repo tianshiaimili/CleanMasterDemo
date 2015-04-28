@@ -154,11 +154,17 @@ public class CounterView extends TextView {
         }
     }
 
-    void setCurrentTextValue(final float number) {
-        text = formatter.format(prefix, suffix, number);
+    public void setCurrentTextValue(float number) {
+    	if(number == 0f){
+    		text = String.valueOf((int)number);
+    	}else {
+			
+    		text = formatter.format(prefix, suffix, number);
+		}
         setText(text);
     }
 
+    
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
