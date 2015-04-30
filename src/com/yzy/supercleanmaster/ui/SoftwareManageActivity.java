@@ -3,6 +3,7 @@ package com.yzy.supercleanmaster.ui;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
@@ -15,13 +16,16 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+
 import com.yzy.supercleanmaster.R;
 import com.yzy.supercleanmaster.base.BaseSwipeBackActivity;
 import com.yzy.supercleanmaster.fragment.SoftwareManageFragment;
 import com.yzy.supercleanmaster.fragment.WeakFragmentPagerAdapter;
+import com.yzy.supercleanmaster.utils.LogUtils;
 import com.yzy.supercleanmaster.utils.SystemBarTintManager;
 import com.yzy.supercleanmaster.utils.UIElementsHelper;
 import com.yzy.supercleanmaster.views.SlidingTab;
+
 import butterknife.InjectView;
 
 @SuppressLint("NewApi")
@@ -58,9 +62,23 @@ public class SoftwareManageActivity extends BaseSwipeBackActivity {
 
 		tabs.setViewPager(pager);
 		setTabsValue();
-
+	}
+	
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		
+		LogUtils.w("onRestart---");
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		LogUtils.w("onResume---");
+		
+	}
+	
 	private void setTabsValue() {
 		DisplayMetrics dm = getResources().getDisplayMetrics();
 		// 设置Tab是自动填充满屏幕的
@@ -165,4 +183,14 @@ public class SoftwareManageActivity extends BaseSwipeBackActivity {
 		}
 		win.setAttributes(winParams);
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		LogUtils.i("is run here"+requestCode+"  | "+resultCode);
+		
+	}
+	
+	
 }

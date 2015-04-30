@@ -3,6 +3,7 @@ package com.yzy.supercleanmaster.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,10 @@ public class SoftwareAdapter extends BaseAdapter {
                 intent.setAction("android.intent.action.DELETE");
                 intent.addCategory("android.intent.category.DEFAULT");
                 intent.setData(Uri.parse("package:" + item.getPackname()));
-                mContext.startActivity(intent);
+                
+                ((FragmentActivity) mContext).startActivityForResult(intent, 100);
+                
+//                mContext.startActivity(intent);
             }
         });
 

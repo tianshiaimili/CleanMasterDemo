@@ -3,7 +3,9 @@ package com.yzy.supercleanmaster.fragment;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -21,10 +23,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+
 import com.yzy.supercleanmaster.R;
 import com.yzy.supercleanmaster.adapter.SoftwareAdapter;
 import com.yzy.supercleanmaster.base.BaseFragment;
 import com.yzy.supercleanmaster.model.AppInfo;
+import com.yzy.supercleanmaster.utils.LogUtils;
 import com.yzy.supercleanmaster.utils.StorageUtil;
 
 
@@ -51,20 +55,25 @@ public class SoftwareManageFragment extends BaseFragment {
     @InjectView(R.id.progressBarText)
     TextView mProgressBarText;
 
-    private Method mGetPackageSizeInfoMethod;
+//    private Method mGetPackageSizeInfoMethod;
 
     AsyncTask<Void, Integer, List<AppInfo>> task;
 
+    @Override
+    public void onAttach(Activity activity) {
+    	super.onAttach(activity);
+    	LogUtils.w("-----onAttach");
+    	
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         position = getArguments().getInt(ARG_POSITION);
-
-
     }
 
+    
     @Override
     public View onCreateView(LayoutInflater inflater,
                               ViewGroup container,  Bundle savedInstanceState) {
@@ -125,6 +134,7 @@ public class SoftwareManageFragment extends BaseFragment {
                 List<PackageInfo> packInfos = pm.getInstalledPackages(0);
                 publishProgress(0, packInfos.size());
                 List<AppInfo> appinfos = new ArrayList<AppInfo>();
+                //
                 for (PackageInfo packInfo : packInfos) {
                     publishProgress(++mAppCount, packInfos.size());
                     final AppInfo appInfo = new AppInfo();
@@ -154,6 +164,9 @@ public class SoftwareManageFragment extends BaseFragment {
                     String version = packInfo.versionName;
                     appInfo.setVersion(version);
                     try {
+                    	
+//                    	appInfo.setPackageSize(StorageUtil.getInstallAppCapacity(packInfo.applicationInfo));
+                    	appInfo.setPkgSize(StorageUtil.getInstallAppSize(packInfo.applicationInfo));
 //                        mGetPackageSizeInfoMethod.invoke(mContext.getPackageManager(), new Object[]{
 //                                packname,
 //                                new IPackageStatsObserver.Stub() {

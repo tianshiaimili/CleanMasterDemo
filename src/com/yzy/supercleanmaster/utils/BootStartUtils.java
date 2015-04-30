@@ -98,12 +98,14 @@ public class BootStartUtils {
         boolean isSystem = false;
         boolean isenable = true;
         if (resolveInfoList.size() > 0) {
-
             appName = resolveInfoList.get(0).loadLabel(pm).toString();
             LogUtils.d("appName = "+appName);
             packageReceiver = resolveInfoList.get(0).activityInfo.packageName + "/" + resolveInfoList.get(0).activityInfo.name;
             LogUtils.d("packageReceiver = "+packageReceiver);
             icon = resolveInfoList.get(0).loadIcon(pm);
+            /**
+             * 通过获取得监听接收器receiver的app的packageName和负责监听的Receiver，组合成字符串然后通过ComponentName.getComponentEnabledSetting（.）
+             */
             ComponentName mComponentName1 = new ComponentName(resolveInfoList.get(0).activityInfo.packageName, resolveInfoList.get(0).activityInfo.name);
 
             if (pm.getComponentEnabledSetting(mComponentName1) == 2) {
@@ -133,6 +135,7 @@ public class BootStartUtils {
                     packageReceiver = resolveInfoList.get(i).activityInfo.packageName + "/" + resolveInfoList.get(i).activityInfo.name;
                     icon = resolveInfoList.get(i).loadIcon(pm);
                     ComponentName mComponentName2 = new ComponentName(resolveInfoList.get(i).activityInfo.packageName, resolveInfoList.get(i).activityInfo.name);
+                    
                     if (pm.getComponentEnabledSetting(mComponentName2) == 2) {
                     	isenable = false;
                     } else {

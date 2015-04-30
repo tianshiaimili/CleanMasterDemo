@@ -9,9 +9,43 @@ public class AppInfo {
 	private String version;
     private long pkgSize;
 	private int uid;
+	private String versionName;
+	private String versionCode;
+	private String packageSize;
+    /**
+	 * 应用程序可以被安装到不同的位置 , 手机内存 外部存储sd卡
+	 */
+
+
+	private boolean inRom;
+	
+	private boolean userApp;
 	
 	
-	
+	public String getPackageSize() {
+		return packageSize;
+	}
+
+	public void setPackageSize(String packageSize) {
+		this.packageSize = packageSize;
+	}
+
+	public String getVersionName() {
+		return versionName;
+	}
+
+	public void setVersionName(String versionName) {
+		this.versionName = versionName;
+	}
+
+	public String getVersionCode() {
+		return versionCode;
+	}
+
+	public void setVersionCode(String versionCode) {
+		this.versionCode = versionCode;
+	}
+
 	public int getUid() {
 		return uid;
 	}
@@ -28,14 +62,7 @@ public class AppInfo {
         this.pkgSize = pkgSize;
     }
 
-    /**
-	 * 应用程序可以被安装到不同的位置 , 手机内存 外部存储sd卡
-	 */
 
-
-	private boolean inRom;
-	
-	private boolean userApp;
 
 	public Drawable getAppIcon() {
 		return appIcon;

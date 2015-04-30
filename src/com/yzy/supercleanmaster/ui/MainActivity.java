@@ -29,6 +29,7 @@ import com.yzy.supercleanmaster.fragment.NavigationDrawerFragment;
 import com.yzy.supercleanmaster.fragment.RelaxFragment;
 import com.yzy.supercleanmaster.fragment.SettingsFragment;
 import com.yzy.supercleanmaster.utils.LogUtils;
+import com.yzy.supercleanmaster.utils.StorageUtil;
 import com.yzy.supercleanmaster.utils.SystemBarTintManager;
 import com.yzy.supercleanmaster.utils.T;
 import com.yzy.supercleanmaster.utils.UIElementsHelper;
@@ -39,7 +40,6 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
 
     @InjectView(R.id.container)
     FrameLayout container;
-
     /**这个是drawer左边的布局*/
     @InjectView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -71,8 +71,7 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
 
         onNavigationDrawerItemSelected(0);
         initDrawer();
-
-
+        StorageUtil.getInstalledApps(getPackageManager());
     }
 
 

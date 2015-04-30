@@ -47,7 +47,7 @@ public class AutoStartManageActivity extends BaseSwipeBackActivity {
 		// applyKitKatTranslucency();
 		res = getResources();
 		adapter = new MyPagerAdapter(getSupportFragmentManager());
-		pager.setAdapter(adapter);
+		pager.setAdapter(adapter);                                                                                                                                                                                                                                    
 
 		int pageMargin = (int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
@@ -90,7 +90,6 @@ public class AutoStartManageActivity extends BaseSwipeBackActivity {
 	 */
 
 	private void applyKitKatTranslucency() {
-
 		// KitKat translucent navigation/status bar.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 			setTranslucentStatus(true);

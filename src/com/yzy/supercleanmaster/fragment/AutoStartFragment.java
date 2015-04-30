@@ -34,13 +34,11 @@ public class AutoStartFragment extends BaseFragment {
 	private static final String ARG_POSITION = "position";
 	private int position; // 0:普通软件，2 系统软件
 	AutoStartAdapter mAutoStartAdapter;
-
 	@InjectView(R.id.listview)
 	ListView listview;
 
 	@InjectView(R.id.bottom_lin)
 	LinearLayout bottom_lin;
-
 	@InjectView(R.id.disable_button)
 	Button disableButton;
 	@InjectView(R.id.topText)
@@ -64,7 +62,6 @@ public class AutoStartFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		position = getArguments().getInt(ARG_POSITION);
 	}
 
