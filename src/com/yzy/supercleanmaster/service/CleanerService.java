@@ -1,10 +1,17 @@
 package com.yzy.supercleanmaster.service;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.IPackageDataObserver;
+import android.content.pm.IPackageStatsObserver;
 //import android.content.pm.IPackageDataObserver;
 //import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageManager;
@@ -19,13 +26,9 @@ import android.os.StatFs;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.yzy.supercleanmaster.R;
 import com.yzy.supercleanmaster.model.CacheListItem;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 @SuppressLint("NewApi")
 public class CleanerService extends Service {
@@ -87,41 +90,41 @@ public class CleanerService extends Service {
 
             try {
                 for (ApplicationInfo pkg : packages) {
-//                    mGetPackageSizeInfoMethod.invoke(getPackageManager(), pkg.packageName,
-//                            new IPackageStatsObserver.Stub() {
-//
-//                                @Override
-//                                public void onGetStatsCompleted(PackageStats pStats, boolean succeeded)
-//                                        throws RemoteException {
-//                                    synchronized (apps) {
-//                                        publishProgress(++mAppCount, packages.size());
-//
-//                                        if (succeeded && pStats.cacheSize > 0) {
-//                                            try {
-//                                                apps.add(new CacheListItem(pStats.packageName,
-//                                                        getPackageManager().getApplicationLabel(
-//                                                                getPackageManager().getApplicationInfo(
-//                                                                        pStats.packageName,
-//                                                                        PackageManager.GET_META_DATA)
-//                                                        ).toString(),
-//                                                        getPackageManager().getApplicationIcon(
-//                                                                pStats.packageName),
-//                                                        pStats.cacheSize
-//                                                ));
-//
-//                                                mCacheSize += pStats.cacheSize;
-//                                            } catch (PackageManager.NameNotFoundException e) {
-//                                                e.printStackTrace();
-//                                            }
-//                                        }
-//                                    }
-//
-//                                    synchronized (countDownLatch) {
-//                                        countDownLatch.countDown();
-//                                    }
-//                                }
-//                            }
-//                    );
+                    mGetPackageSizeInfoMethod.invoke(getPackageManager(), pkg.packageName,
+                            new IPackageStatsObserver.Stub() {
+
+                                @Override
+                                public void onGetStatsCompleted(PackageStats pStats, boolean succeeded)
+                                        throws RemoteException {
+                                    synchronized (apps) {
+                                        publishProgress(++mAppCount, packages.size());
+
+                                        if (succeeded && pStats.cacheSize > 0) {
+                                            try {
+                                                apps.add(new CacheListItem(pStats.packageName,
+                                                        getPackageManager().getApplicationLabel(
+                                                                getPackageManager().getApplicationInfo(
+                                                                        pStats.packageName,
+                                                                        PackageManager.GET_META_DATA)
+                                                        ).toString(),
+                                                        getPackageManager().getApplicationIcon(
+                                                                pStats.packageName),
+                                                        pStats.cacheSize
+                                                ));
+
+                                                mCacheSize += pStats.cacheSize;
+                                            } catch (PackageManager.NameNotFoundException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+
+                                    synchronized (countDownLatch) {
+                                        countDownLatch.countDown();
+                                    }
+                                }
+                            }
+                    );
                 }
 
                 countDownLatch.await();
@@ -165,18 +168,18 @@ public class CleanerService extends Service {
             StatFs stat = new StatFs(Environment.getDataDirectory().getAbsolutePath());
 
             try {
-//                mFreeStorageAndNotifyMethod.invoke(getPackageManager(),
-//                        (long) stat.getBlockCount() * (long) stat.getBlockSize(),
-//                        new IPackageDataObserver.Stub() {
-//                            @Override
-//                            public void onRemoveCompleted(String packageName, boolean succeeded)
-//                                    throws RemoteException {
-//                                countDownLatch.countDown();
-//                            }
-//                        }
-//                );
-//
-//                countDownLatch.await();
+                mFreeStorageAndNotifyMethod.invoke(getPackageManager(),
+                        (long) stat.getBlockCount() * (long) stat.getBlockSize(),
+                        new IPackageDataObserver.Stub() {
+                            @Override
+                            public void onRemoveCompleted(String packageName, boolean succeeded)
+                                    throws RemoteException {
+                                countDownLatch.countDown();
+                            }
+                        }
+                );
+
+                countDownLatch.await();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -196,6 +199,9 @@ public class CleanerService extends Service {
         }
     }
 
+    
+    /////////////////////////////////////////////////////////////////////
+    
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
@@ -204,11 +210,11 @@ public class CleanerService extends Service {
     @Override
     public void onCreate() {
         try {
-//            mGetPackageSizeInfoMethod = getPackageManager().getClass().getMethod(
-//                    "getPackageSizeInfo", String.class, IPackageStatsObserver.class);
+            mGetPackageSizeInfoMethod = getPackageManager().getClass().getMethod(
+                    "getPackageSizeInfo", String.class, IPackageStatsObserver.class);
 //
-//            mFreeStorageAndNotifyMethod = getPackageManager().getClass().getMethod(
-//                    "freeStorageAndNotify", long.class, IPackageDataObserver.class);
+            mFreeStorageAndNotifyMethod = getPackageManager().getClass().getMethod(
+                    "freeStorageAndNotify", long.class, IPackageDataObserver.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

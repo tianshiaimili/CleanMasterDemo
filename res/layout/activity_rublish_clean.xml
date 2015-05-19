@@ -4,80 +4,75 @@
     xmlns:counter="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <RelativeLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="80dip"
             android:background="@color/title_bg"
-            android:visibility="gone"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" >
 
                 <com.yzy.supercleanmaster.widget.textcounter.CounterView
+                    android:id="@+id/textCounter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textCounter"
-                    android:textSize="48sp"
                     android:text="250"
                     android:textColor="@color/white"
+                    android:textSize="48sp"
                     counter:autoStart="false" />
 
                 <TextView
-                    android:layout_marginTop="10dip"
-                    android:layout_marginLeft="@dimen/margin_right"
-                    android:layout_toRightOf="@+id/textCounter"
                     android:id="@+id/sufix"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/white"
-                    android:text="KB"
-                    android:textSize="@dimen/text_size_middle"
-                    android:layout_height="wrap_content" />
-
-                <TextView
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_right"
                     android:layout_marginTop="10dip"
                     android:layout_toRightOf="@+id/textCounter"
-                    android:layout_below="@+id/sufix"
-                    android:layout_width="wrap_content"
-
+                    android:text="KB"
                     android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_middle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sufix"
+                    android:layout_marginLeft="@dimen/margin_right"
+                    android:layout_marginTop="10dip"
+                    android:layout_toRightOf="@+id/textCounter"
                     android:text="可清理"
-                    android:textSize="@dimen/text_size_middle"
-                    android:layout_height="wrap_content" />
-
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_middle" />
             </RelativeLayout>
-
-
         </RelativeLayout>
 
         <ListView
-            android:layout_below="@+id/header"
             android:id="@+id/listview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:fastScrollEnabled="true"
-            android:focusable="true"
-            android:listSelector="@android:color/transparent"
-            android:scrollbars="none"
+            android:layout_below="@+id/header"
             android:clipToPadding="false"
             android:divider="@null"
             android:dividerHeight="4dp"
             android:fadingEdge="none"
+            android:fastScrollEnabled="true"
             android:fitsSystemWindows="true"
+            android:focusable="true"
+            android:listSelector="@android:color/transparent"
+            android:padding="12dp"
             android:scrollbarStyle="outsideOverlay"
-            android:padding="12dp" />
+            android:scrollbars="none" />
 
         <TextView
             android:id="@+id/empty"
@@ -88,28 +83,25 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <LinearLayout
-
-            android:visibility="gone"
-            android:orientation="horizontal"
             android:id="@+id/bottom_lin"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:visibility="gone" >
 
             <Button
                 android:id="@+id/clear_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="8dip"
                 android:background="@drawable/btn_normal_green"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_large"
-                android:layout_width="match_parent"
                 android:gravity="center"
                 android:text="一键清理"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_large" />
         </LinearLayout>
-
     </RelativeLayout>
-
 
     <LinearLayout
         android:id="@+id/progressBar"
@@ -118,7 +110,7 @@
         android:background="?android:attr/windowBackground"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone" >
 
         <fr.castorflex.android.circularprogressbar.CircularProgressBar
             android:id="@+id/progressBar2"
@@ -135,7 +127,6 @@
             android:singleLine="true"
             android:text="@string/scanning"
             android:textAppearance="?android:attr/textAppearanceSmall" />
-
     </LinearLayout>
 
 </FrameLayout>

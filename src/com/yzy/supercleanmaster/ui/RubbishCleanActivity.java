@@ -2,6 +2,7 @@ package com.yzy.supercleanmaster.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -16,7 +17,6 @@ import android.os.IBinder;
 import android.text.format.Formatter;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.InjectView;
 import butterknife.OnClick;
+
 import com.etiennelawlor.quickreturn.library.enums.QuickReturnType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnListViewOnScrollListener;
 import com.nhaarman.listviewanimations.itemmanipulation.OnDismissCallback;
@@ -42,6 +43,7 @@ import com.yzy.supercleanmaster.service.CleanerService;
 import com.yzy.supercleanmaster.utils.StorageUtil;
 import com.yzy.supercleanmaster.utils.SystemBarTintManager;
 import com.yzy.supercleanmaster.utils.UIElementsHelper;
+import com.yzy.supercleanmaster.widget.stickyheader.StikkyHeaderBuilder;
 import com.yzy.supercleanmaster.widget.textcounter.CounterView;
 import com.yzy.supercleanmaster.widget.textcounter.formatters.DecimalFormatter;
 
@@ -124,10 +126,11 @@ public class RubbishCleanActivity extends BaseSwipeBackActivity implements OnDis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rublish_clean);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        //     applyKitKatTranslucency();
+        
+//             applyKitKatTranslucency();
 
-//        StikkyHeaderBuilder.stickTo(mListView).setHeader(header)
-//                .minHeightHeaderPixel(0).build();
+        StikkyHeaderBuilder.stickTo(mListView).setHeader(header)
+                .minHeightHeaderPixel(0).build();
         res = getResources();
 
 
@@ -138,6 +141,7 @@ public class RubbishCleanActivity extends BaseSwipeBackActivity implements OnDis
         mListView.setAdapter(rublishMemoryAdapter);
         mListView.setOnItemClickListener(rublishMemoryAdapter);
         mListView.setOnScrollListener(new QuickReturnListViewOnScrollListener(QuickReturnType.FOOTER, null, 0, bottom_lin, footerHeight));
+        //
         bindService(new Intent(mContext, CleanerService.class),
                 mServiceConnection, Context.BIND_AUTO_CREATE);
     }
@@ -255,7 +259,7 @@ public class RubbishCleanActivity extends BaseSwipeBackActivity implements OnDis
 
     @OnClick(R.id.clear_button)
     public void onClickClear() {
-
+    	
         if (mCleanerService != null && !mCleanerService.isScanning() &&
                 !mCleanerService.isCleaning() && mCleanerService.getCacheSize() > 0) {
             mAlreadyCleaned = false;

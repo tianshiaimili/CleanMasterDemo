@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
@@ -55,7 +56,7 @@ public class SoftwareManageFragment extends BaseFragment {
     @InjectView(R.id.progressBarText)
     TextView mProgressBarText;
 
-//    private Method mGetPackageSizeInfoMethod;
+    private Method mGetPackageSizeInfoMethod;
 
     AsyncTask<Void, Integer, List<AppInfo>> task;
 
@@ -83,8 +84,8 @@ public class SoftwareManageFragment extends BaseFragment {
         ButterKnife.inject(this, view);
         mContext = getActivity();
         try {
-//            mGetPackageSizeInfoMethod = mContext.getPackageManager().getClass().getMethod(
-//                    "getPackageSizeInfo", String.class, IPackageStatsObserver.class);
+            mGetPackageSizeInfoMethod = mContext.getPackageManager().getClass().getMethod(
+                    "getPackageSizeInfo", String.class, IPackageStatsObserver.class);
 
 
         } catch (Exception e) {
@@ -166,19 +167,21 @@ public class SoftwareManageFragment extends BaseFragment {
                     try {
                     	
 //                    	appInfo.setPackageSize(StorageUtil.getInstallAppCapacity(packInfo.applicationInfo));
-                    	appInfo.setPkgSize(StorageUtil.getInstallAppSize(packInfo.applicationInfo));
-//                        mGetPackageSizeInfoMethod.invoke(mContext.getPackageManager(), new Object[]{
-//                                packname,
-//                                new IPackageStatsObserver.Stub() {
-//                                    @Override
-//                                    public void onGetStatsCompleted(PackageStats pStats, boolean succeeded) throws RemoteException {
-//                                        synchronized (appInfo) {
-//                                            appInfo.setPkgSize(pStats.cacheSize + pStats.codeSize + pStats.dataSize);
-//
-//                                        }
-//                                    }
-//                                }
-//                        });
+                    	//获取大小
+//                    	appInfo.setPkgSize(StorageUtil.getInstallAppSize(packInfo.applicationInfo));
+                        mGetPackageSizeInfoMethod.invoke(mContext.getPackageManager(), new Object[]{
+                                packname,
+                                new IPackageStatsObserver.Stub() {
+                                    @Override
+                                    public void onGetStatsCompleted(PackageStats pStats, boolean succeeded) throws RemoteException {
+                                        synchronized (appInfo) {
+                                        	LogUtils.d("pStats.cacheSize----"+pStats.cacheSize);
+                                            appInfo.setPkgSize(pStats.cacheSize + pStats.codeSize + pStats.dataSize);
+
+                                        }
+                                    }
+                                }
+                        });
                     } catch (Exception e) {
                     }
 
